@@ -1,0 +1,64 @@
+{{# partial "head" }}
+    <link rel="stylesheet" type="text/css" href="http://localhost:7001/pageTemplate-1.0.0-SNAPSHOT/resources/css/layoutB.css">
+{{/partial}}
+
+{{# partial "header" }}
+    <div id="header" class="header padding">
+        {{title}}
+    </div>
+{{/partial}}
+
+{{# partial "content" }}
+    <div id="menu" class="left-menu">
+        <ul>
+            {{#each menuItems}}
+            <li><a href="{{{this}}}">{{{this}}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    <div id="body">{{#block "body" }}{{/block}}</div>
+    <div class="clear-div"></div>
+{{/partial}}
+
+{{# partial "footer" }}
+    <div id="footer" class="footer padding">
+        <div class="two-column-left">
+            <span class="heading">Maersk Group</span><br/>
+            some text to go here<br/>
+            another link<br/>
+        </div>
+        <div class="two-column-right">
+            <span class="heading">Static Text</span><br/>
+            This is static<br/>
+            content is the same across pages<br/>
+            key links
+        </div>
+        <div class="clear-div"></div>
+    </div>
+{{/partial}}
+
+{{# partial "scripts" }}
+<script type="text/javascript" src="http://localhost:7001/pageTemplate_war_exploded/resources/js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:7001/pageTemplate_war_exploded/resources/js/lib/handlebars-v4.0.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        {{#if brandCode}}
+            var url = "http://localhost:7001/pageTemplate-1.0.0-SNAPSHOT/rest/menu/v1/{{brandCode}}";
+        {{else}}
+            var url = "http://localhost:7001/pageTemplate-1.0.0-SNAPSHOT/rest/menu/v1";
+        {{/if}}
+        $.getJSON(url, function(data) {
+            compileAndInjectContent("#menu-html", data, "#menu");
+        });
+    });
+
+    function compileAndInjectContent(templateId, context, target){
+        var source   = $(templateId).html();
+        var template = Handlebars.compile(source);
+        var html = template(context);
+        $(target).append(html);
+    }
+</script>
+{{/partial}}
+
+{{> core/core}}

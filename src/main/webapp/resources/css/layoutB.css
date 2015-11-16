@@ -1,0 +1,45 @@
+.header {
+    font-size: 14px;
+    border-bottom: 2px solid black;
+    background-color: white;
+    color: black;
+}
+
+.left-menu {
+    font-size: 14px;
+    float: left; width: 280px;
+}
+
+.left-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 2px;
+    height: auto;
+}
+
+.left-menu ul li{
+    background-color: lightgrey;
+    color: black;
+    display: block;
+    width: 250px;
+    border: 1px solid white;
+    padding: 2px;
+}
+.left-menu ul li:hover{
+    background-color: darkgrey;
+    color: white;
+    cursor: pointer;
+}
+.left-menu ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+#body {
+    float: none; width: auto;
+}
+
+.footer {
+    border-top: 2px solid black;
+    font-size: 11px;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Page Title</title>
+        <link rel="stylesheet" type="text/css" href="http://localhost:7001/pageTemplate-1.0.0-SNAPSHOT/resources/css/core.css">
+        {{#block "head" }}{{/block}}
+        {{#if brandCode}}
+        <link rel="stylesheet" type="text/css" href="http://localhost:7001/pageTemplate-1.0.0-SNAPSHOT/resources/css/{{brandCode}}.css">
+        {{/if}}
+    </head>
+    <body>
+        <div class="container">
+            {{#block "header" }}{{/block}}
+            {{#block "content" }}{{/block}}
+            {{#block "footer" }}{{/block}}
+            <div id="disclaimer">
+                <span class="heading">Legal And Site Information</span><br/>
+                © Maersk Line A/S. All Rights Reserved<br/>
+                <a href="../ml/home">Maerskline</a> | <a href="../saf/home">Safmarine</a> | <a href="../sea/home">Sealand</a>
+            </div>
+        </div>
+        {{#block "scripts"}}{{/block}}
+    </body>
+</html>
