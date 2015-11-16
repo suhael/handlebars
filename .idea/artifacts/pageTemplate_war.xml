@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="pageTemplate:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="pageTemplate-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="pageTemplate:war exploded" />
+    </root>
+  </artifact>
+</component>
