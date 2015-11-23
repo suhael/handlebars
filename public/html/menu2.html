@@ -2,83 +2,19 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <script type="text/javascript">
     var context = {
-        menuItems : [
-            {
-                "title" : "My Maersk Line",
-                "url" : "/dashboard",
-                "class" : "dropdown-toggle",
-                "subLinks" : [
-                    {
-                        "title" : "item1",
-                        "url" : "#",
-                        "class" : "dropdown-toggle",
-                        "target" : "_blank"
-                    },
-                    {
-                        "divider" : true
-                    },
-                    {
-                        "title" : "item2",
-                        "url" : "#",
-                        "class" : "dropdown-toggle"
-                    },
-                    {
-                        "divider" : true
-                    }
-                ]
-            },
-            {
-                "title" : "Book",
-                "url" : "/booking/new",
-                "class" : "dropdown-toggle"
-            },
-            {
-                "title" : "Lookup",
-                "url" : "#",
-                "class" : "dropdown-toggle"
-            },
-            {
-                "title" : "Track",
-                "url" : "/shipmentbinder/",
-                "class" : "dropdown-toggle"
-            },
-            {
-                "title" : "Help",
-                "url" : "#",
-                "class" : "dropdown-toggle"
-            },
-            {
-                "title" : "MyFinance",
-                "url" : "/go/myfinance",
-                "class" : "dropdown-toggle"
-            }
+        menu : [
+            "home",
+            "aboutsada",
+            "contactsadad",
+            "search",
+            "edit"
         ]
     };
 </script>
 <script id="menu-template" type="text/x-handlebars-template">
 
-    <a class="brand image" href="/"><img class="logo" src="http://my.maerskline.com/public/10_0_202/images/branding/logo_MAEU.png"
+    <a class="brand image" href="/"><img class="logo" src="/public/10_0_202/images/branding/logo_MAEU.png"
                                          alt="Maersk Line logo"/></a>
-    <ul class="nav">
-        {{#menuItems}}
-        <li class="dropdown">
-            <a href="{{url}}" class="{{class}}">{{title}}</a>
-            {{#if subLinks}}
-            <ul class="dropdown-menu">
-            {{#each links}}
-                {{#if divider}}
-                    <li class="divider"></li>
-                {{else}}
-                    <li {{#if class}}class="{{class}}"{{/if}}><a href="{{url}}" {{#if target}}target="{{target}}"{{/if}}>{{title}}</a></li>
-                {{/if}}
-            {{/each}}
-            </ul>
-            {{/if}}
-        </li>
-        {{/menuItems}}
-    </ul>
-
-
     <ul class="nav">
         <li class="dropdown">
             <a href="/dashboard" class="dropdown-toggle">My Maersk Line</a>
@@ -133,7 +69,6 @@
         <li class=""><a href="/go/myfinance" class="dropdown-toggle" id="myfinance">MyFinance</a></li>
         </li>
     </ul>
-
 </script>
 <html lang="en">
 <head>
