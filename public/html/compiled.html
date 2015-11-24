@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div id="hello"></div>
+<div id="anotherExample"></div>
+
+<script type="text/javascript" src="js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/lib/handlebars.runtime.js"></script>
+<script type="text/javascript" src="js/templates.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var context = {title: "My First Handlebars template", content: "This was really easy!", user: { name: "Suhael" }};
+
+        var hellotemplate = Handlebars.templates.hello(context);
+        $("#hello").append(hellotemplate);
+        var anothertemplate = Handlebars.templates.another(context);
+        $("#anotherExample").append(anothertemplate);
+
+    });
+</script>
+</body>
+</html>
