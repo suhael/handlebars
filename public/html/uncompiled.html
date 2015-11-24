@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script id="hello-template" type="text/x-handlebars-template">
+    <div>
+        <h1>{{title}}</h1>
+        <p>{{content}}</p>
+    </div>
+</script>
+<script id="another-template" type="text/x-handlebars-template">
+    <div>
+        <p>Welcome {{user.name}}</p>
+    </div>
+</script>
+
+<div id="hello"></div>
+<div id="anotherExample"></div>
+
+<script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var context = {title: "My First Handlebars template", content: "This was really easy!", user: { name: "Suhael" }};
+
+        compileAndInjectContent("#hello-template", context, "#hello");
+        compileAndInjectContent("#another-template", context, "#anotherExample");
+
+    });
+
+    function compileAndInjectContent(templateId, context, target){
+        var source   = $(templateId).html();
+        var template = Handlebars.compile(source);
+        var html = template(context);
+        $(target).append(html);
+    }
+</script>
+</body>
+</html>
