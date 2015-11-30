@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://my.maerskline.com/public/10_0_203/thirdparty.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_203/maersk.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/theme.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="results"></div>
+
+<script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var data = {
+            "countryCode" : "USA",
+            "city" : "New York",
+            "company" : "Coca-Cola",
+            "tooManyResults" : true
+
+        };
+
+        compileAndInjectContent("#results-template", data, "#results");
+    });
+
+    function compileAndInjectContent(templateId, context, target){
+        var source   = $(templateId).html();
+        var template = Handlebars.compile(source);
+        var html = template(context);
+        $(target).html(html);
+    }
+</script>
+<script id="results-template" type="text/x-handlebars-template">
+    <h1>Search Results</h1>
+    <h3>you searched for <strong>&quot;{{countryCode}}&quot;</strong>, <strong>&quot;{{city}}&quot;</strong>, <strong>&quot;{{company}}&quot;</strong></h3>
+    <p>Return and search again</p>
+
+    {{#if zeroResults}}
+        <div>No results found</div>
+        <button>Create a new record</button>
+        <button>Return and search again</button>
+
+    {{else}}
+        {{#if tooManyResults}}
+            <div>more than {{resultCount}} results found</div>
+            <button>Return and narrow your search</button>
+        {{else}}
+            <div>{{resultCount}} results found</div>
+        {{/if}}
+        <div>Not found what you need? Create a new record</div>
+
+        {{#results}}
+            <div>
+                <div>Trading name {{name}}</div>
+                <div>Customer code {{code}}</div>
+            </div>
+        {{/results}}
+
+        {{#if tooManyResults}}
+            {{#if finalPage}}
+                <div>
+                    <p>30 is the most number of results we can return</p>
+                    <button>Return and narrow your search</button>
+                    <p>Or if you have it, try searching by unique customer code</p>
+                    <input type="text" name="unc" id="unc"/> <button>search</button>
+                    <div>Still not found what you need? Create a new record</div>
+                </div>
+            {{/if}}
+        {{/if}}
+    {{/if}}
+
+
+</script>
+</body>
+</html>

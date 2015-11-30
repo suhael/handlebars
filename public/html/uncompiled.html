@@ -3,41 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link href="../css/theme.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-<script id="hello-template" type="text/x-handlebars-template">
-    <div>
-        <h1>{{title}}</h1>
-        <p>{{content}}</p>
-    </div>
-</script>
-<script id="another-template" type="text/x-handlebars-template">
-    <div>
-        <p>Welcome {{user.name}}</p>
-    </div>
-</script>
 
-<div id="hello"></div>
-<div id="anotherExample"></div>
+<div id="search"></div>
+<div id="results"></div>
 
 <script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
-        var context = {title: "My First Handlebars template", content: "This was really easy!", user: { name: "Suhael" }};
-
-        compileAndInjectContent("#hello-template", context, "#hello");
-        compileAndInjectContent("#another-template", context, "#anotherExample");
+        initPage();
 
     });
+
+    function initPage(){
+        var context = {};
+        compileAndInjectContent("#search-template", context, "#search");
+        showBlock("search");
+
+    }
+
+    function submitSearch(){
+        $.ajax({
+            url: "../../php/test.php",
+            type: "get",
+            success: function (response) {
+                // you will get response from your php page (what you echo or print)
+                console.log(response);
+                var context = {};
+                compileAndInjectContent("#results-template", context, "#results");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+                var context = {};
+                compileAndInjectContent("#systemUnavailable-template", context, "#results");
+            }
+        });
+    }
+
+    function showBlock(block){
+        if(block == "search"){
+            $("#search").show();
+            $("#results").hide();
+        } else {
+            $("#search").hide();
+            $("#results").show();
+        }
+    }
 
     function compileAndInjectContent(templateId, context, target){
         var source   = $(templateId).html();
         var template = Handlebars.compile(source);
         var html = template(context);
-        $(target).append(html);
+        $(target).html(html);
     }
+</script>
+<script id="search-template" type="text/x-handlebars-template">
+    <p>Search for a customer</p>
+    <p>Please search by address, OR by unique customer number.</p>
+    <div>
+        <label for="country">Country</label>
+        <input type="text" name="country" id="country"/>
+        <label for="city">Country</label>
+        <input type="text" name="city" id="city"/>
+    </div>
+    <div>
+        <p><b>Country</b> <span id="selectedCountry"></span></p>
+        <p><b>City</b> <span id="selectedCity"></span></p>
+    </div>
+    <div>
+        <label for="street">Street name</label>
+        <input type="text" name="street" id="street"/>
+        <label for="pcode">Postal code</label>
+        <input type="text" name="pcode" id="pcode"/>
+        <label for="ctn">Customer trading name</label>
+        <input type="text" name="ctn" id="ctn"/>
+
+        <div><span>More search criteria</span> +</div>
+        <div>
+            <label for="buildingNumber">House/building number</label>
+            <input type="text" name="buildingNumber" id="buildingNumber"/>
+            <label for="buildingName">Building name</label>
+            <input type="text" name="buildingName" id="buildingName"/>
+            <label for="region">Region</label>
+            <input type="text" name="region" id="region"/>
+            <label for="poBox">PO BOX</label>
+            <input type="text" name="poBox" id="poBox"/>
+        </div>
+
+        <div>Account status searching for:</div>
+        <input type="radio" name="accountStatus" value="active" id="activeAccount"/><label for="activeAccount">Active</label>
+        <input type="radio" name="accountStatus" value="inactive" id="inactiveAccount"/><label for="inactiveAccount">Inactive</label>
+        <input type="radio" name="accountStatus" value="suspended" id="suspendedAccount"/><label for="suspendedAccount">Suspended</label>
+        <input type="radio" name="accountStatus" value="all" id="allAccount"/><label for="allAccount">All</label>
+
+        <input type="button" name="search" value="Search">
+    </div>
+    <div>- OR -</div>
+    <div>
+        <label for="unc">Unique Customer Code</label>
+        <input type="text" value="" name="unc" id="unc"/>
+        <input type="button" name="search" value="Search">
+    </div>
+</script>
+<script id="results-template" type="text/x-handlebars-template">
+    <p>Search Results</p>
+    <p>you searched for &quot;{{countryCode}}&quot;, &quot;{{city}}&quot;, &quot;{{company}}&quot;</p>
+    {{#unless tooManyResults}}
+    <p>Return and search again</p>
+    {{/unless}}
+
+    <div>{{resultCount}} results found</div>
+    {{#if tooManyResults}}
+        <div>more than {{resultCount}} results found</div>
+        <button>Return and narrow your search</button>
+    {{else}}
+        <div>{{resultCount}} results found</div>
+    {{/endif}}
+    <div>Not found what you need? Create a new record</div>
+
+    {{#results}}
+    <div>
+        <div>Trading name {{name}}</div>
+        <div>Customer code {{code}}</div>
+    </div>
+    {{/results}}
+
+    {{#if tooManyResults}}
+    {{#if finalPage}}
+    <div>
+        <p>30 is the most number of results we can return</p>
+        <button>Return and narrow your search</button>
+        <p>Or if you have it, try searching by unique customer code</p>
+        <input type="text" name="unc" id="unc"/> <button>search</button>
+        <div>Still not found what you need? Create a new record</div>
+    </div>
+    {{/if}}
+    {{/if}}
+</script>
+<script id="noresults-template" type="text/x-handlebars-template">
+    <p>Search Results</p>
+    <p>you searched for &quot;{{countryCode}}&quot;, &quot;{{city}}&quot;, &quot;{{company}}&quot;</p>
+    <div>No records found</div>
+    <button>Create a new record</button>
+    <button>Return and search again</button>
+</script>
+<script id="systemUnavailable-template" type="text/x-handlebars-template">
+    <p>System unavailable</p>
+    <p>We regret that this service is unavailable right now.</p>
+    <p>Please try again later</p>
+    <button>Return</button>
 </script>
 </body>
 </html>

@@ -1,71 +1,62 @@
-body {
-    padding: 0px;
-    margin: 0px;
+h1 {
+    color: black;
+    font-weight: bold;
 }
 
-.center {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+h3 {
+    color: black;
+    font-weight: normal;
+}
+
+label {
+    font-weight: bold;
+}
+
+.lightBlueBackground {
+    background-color: lightblue;
+}
+
+.mediumPadding {
     padding: 5px;
 }
-.header {
-    background-color: steelblue;
-    color: white;
-    padding: 5px 0px;
+
+.two-column-left {
+    float: left;
+}
+.two-column-right {
+    float: right;
 }
 
-#header .column-left{ float: left; width: 40%; }
-#header .column-right{ float: right; width: 40%; }
-#header .login {
-    text-align: right;
-    font-size: 11px;
-}
-
-.menu {
-    background-color: cornflowerblue;
-    color: white;
-    font-size: 12px;
-}
-
-.menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    height: auto;
-}
-
-.menu ul li{
-    display: inline-block;
-    width: 100px;
-}
-.menu ul li a:hover{
-    color: red;
-    cursor: pointer;
-}
-.menu ul li a{
-    text-decoration: none;
-    color: white;
-}
-
-.footer {
-    background-color: cornflowerblue;
-    color: white;
-    font-size: 11px;
-}
-
-#footer .column-left{ float: left; width: 33%; }
-#footer .column-right{ float: right; width: 33%; }
-#footer .column-center{ display: inline-block; width: 33%; }
-
-.clear-div {
+.clearDiv {
     clear: both;
 }
 
-#disclaimer {
-    font-size: 11px;
+
+.spaceTopAndBottom{
+    margin: 10px 0px;
 }
 
-.heading {
+.boldTxt{
     font-weight: bold;
+}
+
+#accountOptions {
+    margin-bottom: 15px;
+}
+
+#accountOptions label {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 10px 0px 0px;
+    font-weight: normal;
+}
+
+#accountOptions input {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 5px 0px 0px;
+}
+
+.centerText {
+    text-align: center;
 }

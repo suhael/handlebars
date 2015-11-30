@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://my.maerskline.com/public/10_0_203/thirdparty.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_203/maersk.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/jquery-ui.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/jquery-ui.structure.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/jquery-ui.theme.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/theme.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="search" style="width: 230px; border: 1px solid #efefef">
+    <h1>Search for a customer</h1>
+    <p id="basicSearchText">Please search by address, <strong>OR</strong> by unique customer number.</p>
+    <p id="advancedSearchText">Select <strong>one other</strong> address field and search.</p>
+    <div id="countryAndCityOptions">
+        <label for="country">Country</label>
+        <input type="text" name="country" id="country" size="20" maxlength="20"/>
+        <input type="hidden" value="" name="countryCode" id="countryCode"/>
+        <label for="city">City</label>
+        <input type="text" name="city" id="city" size="20" maxlength="20"/>
+    </div>
+    <div id="selectedCountryAndCity" class="lightBlueBackground mediumPadding spaceTopAndBottom">
+        <div class="two-column-left">
+            <b>Country</b> <span id="selectedCountry"></span><br/>
+            <b>City</b> <span id="selectedCity"></span>
+        </div>
+        <div class="two-column-right mediumPadding"><button type="button" class="btn btn-primary btn-lg" id="editCountryAndCityBtn">edit</button></div>
+        <div class="clearDiv"></div>
+    </div>
+    <div id="addressOptions">
+        <label for="street">Street name</label>
+        <input type="text" name="street" id="street" size="20" maxlength="20"/>
+        <label for="pcode">Postal code</label>
+        <input type="text" name="pcode" id="pcode" size="5" maxlength="5"/>
+        <label for="ctn">Customer trading name</label>
+        <input type="text" name="ctn" id="ctn"/>
+        <div id="moreCriteria" class="boldTxt spaceTopAndBottom">
+            <div class="two-column-left">More search criteria</div>
+            <div class="two-column-right">+</div>
+            <div class="clearDiv"></div>
+        </div>
+        <div id="moreCriteriaOptions">
+            <div id="fewerCriteria" class="boldTxt spaceTopAndBottom">
+                <div class="two-column-left">Fewer search criteria</div>
+                <div class="two-column-right">-</div>
+                <div class="clearDiv"></div>
+            </div>
+            <label for="buildingNumber">House/building number</label>
+            <input type="text" name="buildingNumber" id="buildingNumber" size="20" maxlength="20"/>
+            <label for="buildingName">Building name</label>
+            <input type="text" name="buildingName" id="buildingName" size="20" maxlength="20"/>
+            <label for="region">Region</label>
+            <input type="text" name="region" id="region" size="20" maxlength="20"/>
+            <label for="poBox">PO BOX</label>
+            <input type="text" name="poBox" id="poBox" size="10" maxlength="10"/>
+        </div>
+        <p><b>Account status searching for:</b></p>
+        <div id="accountOptions">
+            <label for="activeAccount"><input type="radio" name="accountStatus" value="active" id="activeAccount"/>Active</label>
+            <label for="inactiveAccount"><input type="radio" name="accountStatus" value="inactive" id="inactiveAccount"/>Inactive</label>
+            <label for="suspendedAccount"><input type="radio" name="accountStatus" value="suspended" id="suspendedAccount"/>Suspended</label>
+            <label for="allAccount"><input type="radio" name="accountStatus" value="all" id="allAccount"/>All</label>
+        </div>
+        <p><button type="button" class="btn btn-primary btn-lg">Search</button></p>
+    </div>
+    <div class="centerText">- OR -</div>
+    <div>
+        <form id="uncForm" method="get" action="searchResults.html">
+        <label for="unc">Unique Customer Code</label>
+        <input type="text" value="" name="unc" id="unc"/>
+        <p><button type="button" class="btn btn-primary btn-lg" disabled="disabled">Search</button></p>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        hideInitialFields();
+        setEventActions();
+        getCountryOptions();
+
+        var countriesOptions = getCountryOptions();
+    });
+
+    function hideInitialFields(){
+        hideAddressOptions();
+        $("#moreCriteriaOptions").hide();
+    }
+
+    function setEventActions(){
+        setMoreCriteriaToggle();
+
+        $("#city").focusout(function() {
+            validateCountryAndCity();
+        });
+
+        $("#editCountryAndCityBtn").click(function() {
+            window.location.reload(false);
+        });
+    }
+
+    function getCountryOptions(){
+        var countriesOptions = [];
+        $.ajax({
+            url : "http://localhost/handlebars/handlebars/php/countries.json",
+            type : "GET",
+            data : {},
+            success : function(countryList) {
+                $.each(countryList, function(index, element) {
+                    var option = {label:element.name, value:element.iso2Code};
+                    countriesOptions.push(option);
+                });
+            }
+
+        });
+        return countriesOptions;
+    }
+
+    function getCityOptions(countryCode){
+
+    }
+
+    function validateCountryAndCity(){
+
+        var error = true;
+
+        var selectedCountry = $("#country").val();
+        var selectedCity = $("#city").val();
+
+        if((selectedCountry != "") && (selectedCity != "")){
+            error = false;
+        }
+
+        if(!error){
+            hideCountryAndCityFields();
+            showAddressOptions();
+        }
+    }
+
+    function setSelectedCountryAndCityTxt(){
+        $("#selectedCountry").text($("#country").val());
+        $("#selectedCity").text($("#city").val());
+    }
+
+    function setMoreCriteriaToggle(){
+        $("#moreCriteria").click(function() {
+            $( "#moreCriteriaOptions" ).toggle();
+            $( "#moreCriteria" ).toggle();
+        });
+
+        $("#fewerCriteria").click(function() {
+            $( "#moreCriteriaOptions" ).toggle();
+            $( "#moreCriteria" ).toggle();
+        });
+    }
+
+    function showCountryAndCityFields(){
+        $("#basicSearchText").show();
+        $("#countryAndCityOptions").show();
+    }
+
+    function hideCountryAndCityFields(){
+        $("#basicSearchText").hide();
+        $("#countryAndCityOptions").hide();
+    }
+
+    function showAddressOptions(){
+        $("#advancedSearchText").show();
+        setSelectedCountryAndCityTxt();
+        $("#selectedCountryAndCity").show();
+        $("#addressOptions").show();
+    }
+
+    function hideAddressOptions(){
+        $("#advancedSearchText").hide();
+        $("#selectedCountryAndCity").hide();
+        $("#addressOptions").hide();
+        $("#moreCriteria").show();
+    }
+</script>
+</body>
+</html>
