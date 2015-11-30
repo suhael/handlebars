@@ -65,13 +65,13 @@
             <a href="{{url}}" class="{{class}}">{{title}}</a>
             {{#if subLinks}}
             <ul class="dropdown-menu">
-            {{#each subLinks}}
+            {{#subLinks}}
                 {{#if divider}}
                     <li class="divider"></li>
                 {{else}}
                     <li {{#if class}}class="{{class}}"{{/if}}><a href="{{url}}" {{#if target}}target="{{target}}"{{/if}}>{{title}}</a></li>
                 {{/if}}
-            {{/each}}
+            {{/subLinks}}
             </ul>
             {{/if}}
         </li>
