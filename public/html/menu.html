@@ -57,7 +57,7 @@
 </script>
 <script id="menu-template" type="text/x-handlebars-template">
 
-    <a class="brand image" href="/"><img class="logo" src="http://my.maerskline.com/public/10_0_202/images/branding/logo_MAEU.png"
+    <a class="brand image" href="/"><img class="logo" src="http://my.maerskline.com/public/10_0_205/images/branding/logo_MAEU.png"
                                          alt="Maersk Line logo"/></a>
     <ul class="nav">
         {{#menuItems}}
@@ -65,7 +65,7 @@
             <a href="{{url}}" class="{{class}}">{{title}}</a>
             {{#if subLinks}}
             <ul class="dropdown-menu">
-            {{#each links}}
+            {{#each subLinks}}
                 {{#if divider}}
                     <li class="divider"></li>
                 {{else}}
@@ -78,62 +78,6 @@
         {{/menuItems}}
     </ul>
 
-
-    <ul class="nav">
-        <li class="dropdown">
-            <a href="/dashboard" class="dropdown-toggle">My Maersk Line</a>
-            <ul class="dropdown-menu">
-                <li><a href="/shipmentoverview" class="important">My Shipments</a></li>
-                <li class=""><a href="/shipmentoverview/documentation/submit">Submit Shipping Instructions</a></li>
-                <li class=""><a href="/shipmentoverview/documentation/verify">Approve Verify Copy</a></li>
-                <li class=""><a href="/shipmentoverview/documentation/bl/print">Print Bill of Lading</a></li>
-                <li class=""><a href="/shipmentoverview/documentation/w/print">Print Waybill</a></li>
-                <li class=""><a href="/shipmentoverview/bl/formOrder">Order Bill of Lading Form</a></li>
-                <li class="divider"></li>
-                <li><a href="/notificationcentre/eta">Notifications</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="/booking/new" class="dropdown-toggle">Book</a>
-            <ul class="dropdown-menu">
-                <li><a href="/booking/new">Book New Shipment</a></li>
-                <li><a href="/shipmentoverview/duplicate">Duplicate Existing Shipment</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle">Lookup</a>
-            <ul class="dropdown-menu">
-                <li class=""><a href="/schedules">Schedules</a>
-                </li>
-                <li><a href="/rules-lookup/">Tariff Text Rules</a></li>
-                <li><a href="/rate-lookup/tl">Tariff Rates</a></li>
-                <li><a href="/rate-lookup/cl">Contract Rates</a></li>
-                <li class="divider"></li>
-                <li class=""><a href="/essential/contractLookup">Essential Terms</a>
-                </li>
-                <li class=""><a href="http://baf.maerskline.com" target="_blank">Baf Calculator</a>
-                </li>
-                <li class=""><a href="http://www.maerskline.com/help/services-and-fees"
-                                target="_blank">Surcharges</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="/shipmentbinder/" class="dropdown-toggle">Track</a>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Help</a>
-            <ul class="dropdown-menu">
-                <li class="live-chat"><a href="https://service.liveperson.net/hc/39344047/?cmd=file&file=visitorWantsToChat&site=39344047">Live Help</a>
-                </li>
-                <li class=""><a href="http://www.maerskline.com/help/world-factbook" target="_blank">Local Offices</a></li>
-                <li><a href="/explore">Explore My Maersk Line</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-        <li class=""><a href="/go/myfinance" class="dropdown-toggle" id="myfinance">MyFinance</a></li>
-        </li>
-    </ul>
-
 </script>
 <html lang="en">
 <head>
@@ -141,8 +85,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>title</title>
-    <link href="http://my.maerskline.com/public/10_0_202/thirdparty.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://my.maerskline.com/public/10_0_202/maersk.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_205/thirdparty.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_205/maersk.min.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div id="page">
