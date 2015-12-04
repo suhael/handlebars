@@ -3,28 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link href="http://my.maerskline.com/public/10_0_203/thirdparty.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://my.maerskline.com/public/10_0_203/maersk.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_205/thirdparty.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://my.maerskline.com/public/10_0_205/maersk.min.css" type="text/css" rel="stylesheet"/>
     <link href="../css/theme.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 
+<div id="searchCriteria"></div>
 <div id="results"></div>
 
 <script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var data = {
-            "countryCode" : "USA",
-            "city" : "New York",
-            "company" : "Coca-Cola",
-            "tooManyResults" : true
 
+
+        var searchData = {
+            fields : {
+                country : "",
+                city : "",
+                company : "",
+                customerLegalName : "",
+                customerTradingName : "GLOBAL LINER AGENCIES",
+                lifecycleStatus : "",
+                house : "",
+                street : "",
+                region : "",
+                pobox : "",
+                postalCode : ""
+            },
+            getParameterByName : function(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                        results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            },
+            setCountry : function(){
+                this.fields.country = this.getParameterByName("country");
+            },
+            setCity : function(){
+                this.fields.city = this.getParameterByName("city");
+            }
+
+        }
+
+        searchData.setCountry();
+        searchData.setCity();
+
+        compileAndInjectContent("#searchCriteria-template", searchData, "#searchCriteria");
+
+        var templateData = {
+            "zeroResults" : false,
+            "tooManyResults" : false,
+            "finalPage" : false,
         };
 
-        compileAndInjectContent("#results-template", data, "#results");
+        getResults(searchData.fields, templateData);
     });
+
+    function getResults(searchFields, templateData){
+
+        var TOO_MANY_RESULTS = "CMDWS-401";
+        var NO_DATA_FOUND = "CMDWS-501";
+
+        $.ajax({
+            url : "http://uicmd1.tst.ml.apmoller.net:16010/md/customer/rest/customers",
+            type : "GET",
+            data : searchFields,
+            success : function(data) {
+
+                if(data.numberOfRecords == 0){
+                    templateData.zeroResults = true;
+                } else if(data.responseWarning.code == TOO_MANY_RESULTS){
+                    templateData.tooManyResults = true;
+                    templateData.results = data.customerSummaries;
+                    templateData.resultCount = data.numberOfRecords;
+                } else {
+                    templateData.results = data.customerSummaries;
+                    templateData.resultCount = data.numberOfRecords;
+                }
+
+                compileAndInjectContent("#results-template", templateData, "#results");
+            }
+
+        });
+    }
 
     function compileAndInjectContent(templateId, context, target){
         var source   = $(templateId).html();
@@ -33,10 +96,19 @@
         $(target).html(html);
     }
 </script>
-<script id="results-template" type="text/x-handlebars-template">
+<script id="searchCriteria-template" type="text/x-handlebars-template">
     <h1>Search Results</h1>
-    <h3>you searched for <strong>&quot;{{countryCode}}&quot;</strong>, <strong>&quot;{{city}}&quot;</strong>, <strong>&quot;{{company}}&quot;</strong></h3>
+    <h3>you searched for
+        {{#each fields}}
+        <!--{{@key}}: {{this}}-->
+        {{#if this}}
+        <strong>&quot;{{this}}&quot;</strong>,
+        {{/if}}
+        {{/each}}
+    </h3>
     <p>Return and search again</p>
+</script>
+<script id="results-template" type="text/x-handlebars-template">
 
     {{#if zeroResults}}
         <div>No results found</div>
@@ -54,8 +126,8 @@
 
         {{#results}}
             <div>
-                <div>Trading name {{name}}</div>
-                <div>Customer code {{code}}</div>
+                <div>Trading name {{customerTradingName}}</div>
+                <div>Customer code {{customerCode}}</div>
             </div>
         {{/results}}
 
@@ -71,8 +143,6 @@
             {{/if}}
         {{/if}}
     {{/if}}
-
-
 </script>
 </body>
 </html>
