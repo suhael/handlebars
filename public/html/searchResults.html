@@ -9,8 +9,10 @@
 </head>
 <body>
 
-<div id="searchCriteria"></div>
-<div id="results"></div>
+<div id="cmd-app">
+    <div id="searchCriteria"></div>
+    <div id="results"></div>
+</div>
 
 <script type="text/javascript" src="../js/lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
@@ -107,24 +109,24 @@
         {{/if}}
         {{/each}}
     </h3>
-    <p>Return and search again</p>
+    <span><a href="search.html" class="link">Return and search again</a></span>
 </script>
 <script id="results-template" type="text/x-handlebars-template">
 
     {{#if zeroResults}}
-        <div>No results found</div>
-        <button>Create a new record</button>
-        <button>Return and search again</button>
-
+        <div class="result-count centerText boldTxt">No Records are found for the search criteria provided</div>
+        <div align="center"><span class="formButton">Create a new record</span></div>
+        <div align="center"><span class="formButton">Return and search again</span></div>
     {{else}}
         {{#if tooManyResults}}
-            <div>more than {{resultCount}} results found</div>
-            <button>Return and narrow your search</button>
+            <div class="result-count centerText boldTxt">more than {{resultCount}} results found</div>
+            <div align="center"><span class="formButton">Return and narrow your search</span></div>
         {{else}}
-            <div>{{resultCount}} results found</div>
+            <div  class="result-count centerText boldTxt">{{resultCount}} results found</div>
         {{/if}}
-        <div>Not found what you need? Create a new record</div>
+        <div>Not found what you need? <a href="#" class="link">Create a new record</a></div>
 
+        <br/>
         {{#results}}
             <div>
                 <div>Trading name {{customerTradingName}}</div>

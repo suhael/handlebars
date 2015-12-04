@@ -1,62 +1,106 @@
-h1 {
+/*components*/
+
+#cmd-app h1 {
     color: black;
     font-weight: bold;
+    text-shadow: none;
 }
 
-h3 {
+#cmd-app h3 {
     color: black;
     font-weight: normal;
+    font-size: 16px;
 }
 
-label {
+#cmd-app label {
     font-weight: bold;
 }
 
-.lightBlueBackground {
+#cmd-app .formButton {
+    background-color: #1c94c4;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    line-height: 30px;
+    padding: 0px 20px;
+    margin: 5px;
+}
+
+#cmd-app .formButton.disabled {
+    background-color: lightgrey;
+}
+
+
+/*styles*/
+
+#cmd-app .lightBlueBackground {
     background-color: lightblue;
 }
 
-.mediumPadding {
-    padding: 5px;
-}
-
-.two-column-left {
-    float: left;
-}
-.two-column-right {
-    float: right;
-}
-
-.clearDiv {
-    clear: both;
-}
-
-
-.spaceTopAndBottom{
-    margin: 10px 0px;
-}
-
-.boldTxt{
+#cmd-app .boldTxt{
     font-weight: bold;
 }
 
-#accountOptions {
+#cmd-app .mediumPadding {
+    padding: 5px;
+}
+
+#cmd-app .two-column-left {
+    float: left;
+}
+#cmd-app .two-column-right {
+    float: right;
+}
+
+#cmd-app .clearDiv {
+    clear: both;
+}
+
+#cmd-app .spaceTopAndBottom{
+    margin: 10px 0px;
+}
+
+#cmd-app .centerText {
+    text-align: center;
+}
+
+.border {
+    border: 1px solid green;
+}
+
+
+/* sections */
+
+#cmd-app #search {
+    width: 230px;
+    border: 1px solid #666;
+    padding: 0px 20px;
+}
+
+#cmd-app #accountOptions {
     margin-bottom: 15px;
 }
 
-#accountOptions label {
+#cmd-app #accountOptions label {
     display: inline-block;
     vertical-align: middle;
     margin: 0px 10px 0px 0px;
     font-weight: normal;
 }
 
-#accountOptions input {
+#cmd-app #accountOptions input {
     display: inline-block;
     vertical-align: middle;
     margin: 0px 5px 0px 0px;
 }
 
-.centerText {
-    text-align: center;
+
+#cmd-app .link {
+    text-decoration: none;
+    color: #1c94c4;
+}
+
+#cmd-app .result-count{
+    font-size: 16px;
 }
