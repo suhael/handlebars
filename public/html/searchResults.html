@@ -16,21 +16,27 @@
 <script type="text/javascript" src="../js/lib/handlebars-v4.0.2.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
-
         var searchData = {
             fields : {
-                country : "",
-                city : "",
-                company : "",
-                customerLegalName : "",
-                customerTradingName : "GLOBAL LINER AGENCIES",
-                lifecycleStatus : "",
-                house : "",
-                street : "",
-                region : "",
-                pobox : "",
-                postalCode : ""
+            },
+            build : function(){
+                this.setField("country");
+                this.setField("city");
+                this.setField("company");
+                this.setField("customerLegalName");
+                this.setField("customerTradingName");
+                this.setField("lifecycleStatus");
+                this.setField("house");
+                this.setField("street");
+                this.setField("region");
+                this.setField("pobox");
+                this.setField("postalCode");
+            },
+            setField : function(fieldName){
+                var paramValue = this.getParameterByName(fieldName);
+                if(this.checkValueNotBlank(paramValue)){
+                    this.fields[fieldName] = paramValue;
+                }
             },
             getParameterByName : function(name) {
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -38,30 +44,25 @@
                         results = regex.exec(location.search);
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             },
-            setCountry : function(){
-                this.fields.country = this.getParameterByName("country");
-            },
-            setCity : function(){
-                this.fields.city = this.getParameterByName("city");
+            checkValueNotBlank : function(value){
+                return value != "" ? true : false;
             }
+        };
 
-        }
-
-        searchData.setCountry();
-        searchData.setCity();
+        searchData.build();
 
         compileAndInjectContent("#searchCriteria-template", searchData, "#searchCriteria");
+
+        getResults(searchData.fields);
+    });
+
+    function getResults(searchFields){
 
         var templateData = {
             "zeroResults" : false,
             "tooManyResults" : false,
-            "finalPage" : false,
+            "finalPage" : false
         };
-
-        getResults(searchData.fields, templateData);
-    });
-
-    function getResults(searchFields, templateData){
 
         var TOO_MANY_RESULTS = "CMDWS-401";
         var NO_DATA_FOUND = "CMDWS-501";
