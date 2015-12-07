@@ -128,11 +128,16 @@
 
         <br/>
         {{#results}}
-            <div>
-                <div>Trading name {{customerTradingName}}</div>
-                <div>Customer code {{customerCode}}</div>
+            <div class="customerCard">
+                <div>Trading name:<br/>
+                    <span class="boldTxt">{{customerTradingName}}</span>
+                </div>
+                <div>Customer code:<br/>
+                    <span class="boldTxt">{{customerCode}}</span>
+                </div>
             </div>
         {{/results}}
+            <div class="clearDiv"></div>
 
         {{#if tooManyResults}}
             {{#if finalPage}}
