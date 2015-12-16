@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!--<link href="http://my.maerskline.com/public/11_0_220/thirdparty.min.css" type="text/css" rel="stylesheet"/>-->
+    <!--<link href="http://my.maerskline.com/public/11_0_220/maersk.min.css" type="text/css" rel="stylesheet"/>-->
+    <link href="../../css/ssib/theme.css" type="text/css" rel="stylesheet"/>
+    <link href="../../css/ssib/breadcrumb.css" type="text/css" rel="stylesheet"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<h1>dsfsdf</h1>
+    <div id="ssib-app">
+        <div id="breadcrumbs">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../js/lib/handlebars-v4.0.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var crumbs = {
+            crumbs:[
+                {text:"Booking Information"},
+                {text:"Select sailing", isActive:true},
+                {text:"Additional details"},
+                {text:"Review"},
+                {text:"Confirmation"}
+            ]
+        };
+        compileAndInjectContent("#breadcrumb-template", crumbs, "#breadcrumbs");
+
+    });
+
+    function compileAndInjectContent(templateId, context, target){
+        var source   = $(templateId).html();
+        var template = Handlebars.compile(source);
+        var html = template(context);
+        $(target).html(html);
+    }
+</script>
+<script id="breadcrumb-template" type="text/x-handlebars-template">
+    <div class='crumbs'>
+        <ul class='crumb_list'>
+        {{#each crumbs}}
+            <li>
+                <a {{#if isActive}}class='active'{{/if}}>
+                    <span>{{@key}}</span>
+                    <span>{{this.text}}</span>
+                </a>
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+</script>
+</body>
+</html>
